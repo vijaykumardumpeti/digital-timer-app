@@ -39,6 +39,16 @@ export default class DigitalTimer extends Component {
     }
   }
 
+  startTheTime = () => {
+    this.setState(prevState => ({
+      timeInSeconds: prevState.timeInSeconds - 1,
+    }))
+  }
+
+  elapsingTime = () => {
+    this.intervalID = setInterval(this.startTheTime, 250)
+  }
+
   render() {
     const {timeInMinutes, timeInSeconds, isStartButtonClicked} = this.state
     const url = isStartButtonClicked
@@ -49,6 +59,20 @@ export default class DigitalTimer extends Component {
 
     const text = isStartButtonClicked ? 'Pause' : 'Start'
     const timerText = isStartButtonClicked ? 'Running' : 'Paused'
+
+    if (isStartButtonClicked === true) {
+      if (timeInSeconds === 0 || timeInSeconds === '00') {
+        this.setState(prevState => ({
+          timeInSeconds: 59,
+          timeInMinutes: prevState.timeInMinutes - 1,
+        }))
+        this.elapsingTime()
+      } else {
+        clearInterval(this.intervalID)
+      }
+    } else {
+      clearInterval(this.intervalID)
+    }
 
     return (
       <div className="bg-container">
@@ -123,3 +147,4 @@ export default class DigitalTimer extends Component {
     )
   }
 }
+
