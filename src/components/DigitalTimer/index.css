@@ -1,0 +1,109 @@
+/* Write your CSS here */
+.bg-container {
+  background-image: linear-gradient(to right, #ffffff, #cffcf1);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.timer-container {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/digital-timer-elapsed-bg.png');
+  background-size: cover;
+  height: 400px;
+  width: 400px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  padding-left: 40px;
+  margin-right: 20px;
+}
+.timer-small-container {
+  background-color: white;
+  background-size: cover;
+  height: 150px;
+  width: 150px;
+  border-radius: 70px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pause-para {
+  padding: -90px;
+}
+@media all and (max-width: 576px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+.pause-play-buttons {
+  border: 0px none transparent;
+  background-color: transparent;
+}
+.pause-play-icons {
+  height: 35px;
+}
+.pause-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+}
+.reset-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.pause-reset-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.plus-minus-container-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.plus-minus-container-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.plus-minus-button {
+  background-color: transparent;
+  border: 0px none transparent;
+  font-size: 22px;
+  font-weight: bold;
+}
+.twenty-five {
+  background-color: aqua;
+  padding-left: 10px;
+  width: 60px;
+  border-radius: 5px;
+}
+.pause-botton-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
