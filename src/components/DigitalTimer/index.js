@@ -40,25 +40,10 @@ export default class DigitalTimer extends Component {
   }
 
   startTheTime = () => {
+    const {isStartButtonClicked, timeInSeconds} = this.state
     this.setState(prevState => ({
       timeInSeconds: prevState.timeInSeconds - 1,
     }))
-  }
-
-  elapsingTime = () => {
-    this.intervalID = setInterval(this.startTheTime, 250)
-  }
-
-  render() {
-    const {timeInMinutes, timeInSeconds, isStartButtonClicked} = this.state
-    const url = isStartButtonClicked
-      ? 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
-      : 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
-
-    const altText = isStartButtonClicked ? 'pause icon' : 'play icon'
-
-    const text = isStartButtonClicked ? 'Pause' : 'Start'
-    const timerText = isStartButtonClicked ? 'Running' : 'Paused'
 
     if (isStartButtonClicked === true) {
       if (timeInSeconds === 0 || timeInSeconds === '00') {
@@ -73,6 +58,22 @@ export default class DigitalTimer extends Component {
     } else {
       clearInterval(this.intervalID)
     }
+  }
+
+  elapsingTime = () => {
+    this.intervalID = setInterval(this.startTheTime, 1000)
+  }
+
+  render() {
+    const {timeInMinutes, timeInSeconds, isStartButtonClicked} = this.state
+    const url = isStartButtonClicked
+      ? 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
+      : 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
+
+    const altText = isStartButtonClicked ? 'pause icon' : 'play icon'
+
+    const text = isStartButtonClicked ? 'Pause' : 'Start'
+    const timerText = isStartButtonClicked ? 'Running' : 'Paused'
 
     return (
       <div className="bg-container">
@@ -147,4 +148,3 @@ export default class DigitalTimer extends Component {
     )
   }
 }
-
