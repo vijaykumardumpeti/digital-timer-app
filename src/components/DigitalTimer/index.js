@@ -8,12 +8,6 @@ export default class DigitalTimer extends Component {
     isStartButtonClicked: false,
   }
 
-  startButtonClicked = () => {
-    this.setState(prevState => ({
-      isStartButtonClicked: !prevState.isStartButtonClicked,
-    }))
-  }
-
   onResetButton = () => {
     this.setState({
       timeInMinutes: 25,
@@ -40,11 +34,17 @@ export default class DigitalTimer extends Component {
   }
 
   startTheTime = () => {
-    const {isStartButtonClicked, timeInSeconds} = this.state
     this.setState(prevState => ({
       timeInSeconds: prevState.timeInSeconds - 1,
     }))
+  }
 
+  elapsingTime = () => {
+    this.intervalID = setInterval(this.startTheTime, 1000)
+  }
+
+  timeMethod = () => {
+    const {isStartButtonClicked, timeInSeconds} = this.state
     if (isStartButtonClicked === true) {
       if (timeInSeconds === 0 || timeInSeconds === '00') {
         this.setState(prevState => ({
@@ -60,8 +60,11 @@ export default class DigitalTimer extends Component {
     }
   }
 
-  elapsingTime = () => {
-    this.intervalID = setInterval(this.startTheTime, 1000)
+  startButtonClicked = () => {
+    this.setState(prevState => ({
+      isStartButtonClicked: !prevState.isStartButtonClicked,
+    }))
+    this.timeMethod()
   }
 
   render() {
