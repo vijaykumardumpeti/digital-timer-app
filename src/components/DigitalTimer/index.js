@@ -4,26 +4,70 @@ import './index.css'
 export default class DigitalTimer extends Component {
   state = {
     timeInMinutes: 25,
-    timeInSeconds: '00',
-    isStartButtonClicked: false,
+    timeInSeconds: 0,
+    isStartButtonClicked: true,
   }
 
   startButtonClicked = () => {
+    const {isStartButtonClicked} = this.state
     this.setState(prevState => ({
       isStartButtonClicked: !prevState.isStartButtonClicked,
     }))
+
+    if (isStartButtonClicked === true) {
+      this.elapsingTime()
+    } else if (isStartButtonClicked === false) {
+      this.componentWillUnmount()
+    }
+  }
+
+  elapsingTime = () => {
+    this.intervalID = setInterval(this.startTheTime, 1000)
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.intervalID)
+  }
+
+  startTheTime = () => {
+    const {timeInSeconds, timeInMinutes} = this.state
+    if (timeInSeconds === 0) {
+      this.setState(prevState => ({
+        timeInSeconds: 59,
+        timeInMinutes: prevState.timeInMinutes - 1,
+      }))
+      this.setState(prevState => ({
+        timeInSeconds: prevState.timeInSeconds - 1,
+      }))
+    }
+    if (timeInSeconds === 0 && timeInMinutes === 0) {
+      this.componentWillUnmount()
+
+      this.setState(prevState => ({
+        isStartButtonClicked: !prevState.isStartButtonClicked,
+        timeInSeconds: 0,
+        timeInMinutes: 25,
+      }))
+    } else {
+      this.setState(prevState => ({
+        timeInSeconds: prevState.timeInSeconds - 1,
+      }))
+    }
   }
 
   onResetButton = () => {
+    this.componentWillUnmount()
+
     this.setState({
+      isStartButtonClicked: true,
       timeInMinutes: 25,
-      timeInSeconds: '00',
+      timeInSeconds: 0,
     })
   }
 
   onDecrement = () => {
     const {timeInMinutes, isStartButtonClicked} = this.state
-    if (timeInMinutes > 25 && isStartButtonClicked === false) {
+    if (timeInMinutes > 25 && isStartButtonClicked === true) {
       this.setState(prevState => ({
         timeInMinutes: prevState.timeInMinutes - 1,
       }))
@@ -32,52 +76,26 @@ export default class DigitalTimer extends Component {
 
   onIncrement = () => {
     const {isStartButtonClicked} = this.state
-    if (isStartButtonClicked === false) {
+    if (isStartButtonClicked === true) {
       this.setState(prevState => ({
         timeInMinutes: prevState.timeInMinutes + 1,
       }))
     }
   }
 
-  startTheTime = () => {
-    const {isStartButtonClicked, timeInSeconds} = this.state
-    this.setState(prevState => ({
-      timeInSeconds: prevState.timeInSeconds - 1,
-    }))
-
-    if (isStartButtonClicked === true) {
-      if (timeInSeconds === 0 || timeInSeconds === '00') {
-        this.setState(prevState => ({
-          timeInSeconds: 59,
-          timeInMinutes: prevState.timeInMinutes - 1,
-        }))
-        this.elapsingTime()
-      } else {
-        this.setState(prevState => ({
-          timeInSeconds: prevState.timeInSeconds - 1,
-        }))
-      }
-    } else {
-      this.setState(prevState => ({
-        timeInSeconds: prevState.timeInSeconds - 1,
-      }))
-    }
-  }
-
-  elapsingTime = () => {
-    this.intervalID = setInterval(this.startTheTime, 1000)
-  }
-
   render() {
     const {timeInMinutes, timeInSeconds, isStartButtonClicked} = this.state
     const url = isStartButtonClicked
-      ? 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
-      : 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
+      ? 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
+      : 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
 
-    const altText = isStartButtonClicked ? 'pause icon' : 'play icon'
+    const altText = isStartButtonClicked ? 'play icon' : 'pause icon'
 
-    const text = isStartButtonClicked ? 'Pause' : 'Start'
-    const timerText = isStartButtonClicked ? 'Running' : 'Paused'
+    const text = isStartButtonClicked ? 'Start' : 'Pause'
+    const timerText = isStartButtonClicked ? 'Paused' : 'Running'
+
+    const seconds = timeInSeconds > 9 ? timeInSeconds : `0${timeInSeconds}`
+    const minutes = timeInMinutes > 9 ? timeInMinutes : `0${timeInMinutes}`
 
     return (
       <div className="bg-container">
@@ -87,7 +105,7 @@ export default class DigitalTimer extends Component {
             <div className="timer-small-container">
               <div className="pause-para">
                 <h1>
-                  {timeInMinutes}:{timeInSeconds}
+                  {minutes}:{seconds}
                 </h1>
                 <p>{timerText}</p>
               </div>
@@ -152,4 +170,5 @@ export default class DigitalTimer extends Component {
     )
   }
 }
+
 
