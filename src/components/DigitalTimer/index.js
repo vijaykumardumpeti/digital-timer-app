@@ -33,11 +33,8 @@ export default class DigitalTimer extends Component {
     const {timeInSeconds, timeInMinutes} = this.state
     if (timeInSeconds === 0) {
       this.setState(prevState => ({
-        timeInSeconds: 59,
+        timeInSeconds: 60,
         timeInMinutes: prevState.timeInMinutes - 1,
-      }))
-      this.setState(prevState => ({
-        timeInSeconds: prevState.timeInSeconds - 1,
       }))
     }
     if (timeInSeconds === 0 && timeInMinutes === 0) {
@@ -66,8 +63,8 @@ export default class DigitalTimer extends Component {
   }
 
   onDecrement = () => {
-    const {timeInMinutes, isStartButtonClicked} = this.state
-    if (timeInMinutes > 25 && isStartButtonClicked === true) {
+    const {isStartButtonClicked} = this.state
+    if (isStartButtonClicked === true) {
       this.setState(prevState => ({
         timeInMinutes: prevState.timeInMinutes - 1,
       }))
@@ -170,5 +167,6 @@ export default class DigitalTimer extends Component {
     )
   }
 }
+
 
 
