@@ -6,6 +6,7 @@ export default class DigitalTimer extends Component {
     timeInMinutes: 25,
     timeInSeconds: 0,
     isStartButtonClicked: true,
+    timerLimit: 25,
   }
 
   startButtonClicked = () => {
@@ -63,25 +64,33 @@ export default class DigitalTimer extends Component {
   }
 
   onDecrement = () => {
-    const {isStartButtonClicked} = this.state
+    const {isStartButtonClicked, timerLimit} = this.state
     if (isStartButtonClicked === true) {
       this.setState(prevState => ({
-        timeInMinutes: prevState.timeInMinutes - 1,
+        timerLimit: prevState.timerLimit - 1,
+        timeInMinutes: timerLimit - 1,
       }))
     }
   }
 
   onIncrement = () => {
-    const {isStartButtonClicked} = this.state
+    const {isStartButtonClicked, timerLimit} = this.state
     if (isStartButtonClicked === true) {
       this.setState(prevState => ({
-        timeInMinutes: prevState.timeInMinutes + 1,
+        timerLimit: prevState.timerLimit + 1,
+        timeInMinutes: timerLimit + 1,
       }))
     }
   }
 
   render() {
-    const {timeInMinutes, timeInSeconds, isStartButtonClicked} = this.state
+    const {
+      timeInMinutes,
+      timeInSeconds,
+      isStartButtonClicked,
+      timerLimit,
+    } = this.state
+    console.log(timerLimit)
     const url = isStartButtonClicked
       ? 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
       : 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
@@ -151,7 +160,7 @@ export default class DigitalTimer extends Component {
                 >
                   -
                 </button>
-                <p className="twenty-five">{timeInMinutes}</p>
+                <p className="twenty-five">{timerLimit}</p>
                 <button
                   onClick={this.onIncrement}
                   className="plus-minus-button"
